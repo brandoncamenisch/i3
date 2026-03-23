@@ -23,10 +23,7 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:ProggyCleanTT 10
-font pango:ProggyClean Nerd Font Propo 10
-
-
+font pango: Noto Sans Regular 10
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -51,7 +48,7 @@ workspace_layout default
 ##############################
 
 #border indicator on windows:
-new_window pixel 1
+new_window pixel 3
 
 # thin borders
 # hide_edge_borders both
@@ -152,19 +149,19 @@ mode "resize" {
 # Pressing right will grow the window's width.
 # Pressing up will shrink the window's height.
 # Pressing down will grow the window's height.
-        bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym l resize grow width 5 px or 5 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
-	bindsym Left resize shrink width 5 px or 5 ppt
-	bindsym Down resize grow height 5 px or 5 ppt
-	bindsym Up resize shrink height 5 px or 5 ppt
-	bindsym Right resize grow width 5 px or 5 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
-	bindsym Return mode "default"
+	     bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
@@ -198,7 +195,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # keybinding in fancy rofi (automated):
-# bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
+bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
 # alternative
 # keybinding list in editor:
 # bindsym $mod+F1 exec --no-startup-id xed ~/.config/i3/keybindings
@@ -252,7 +249,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -294,7 +291,7 @@ bindsym $mod+p exec --no-startup-id ~/.config/i3/scripts/audio-device-switch
 ## App shortcuts
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
-bindsym Print exec --no-startup-id scrot ~/Pictures/screenshots/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
+bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -328,7 +325,7 @@ set $ws10 "10"
 # bind program to workspace and focus to them on startup:
 assign [class="Xfce4-terminal"] $ws1
 assign [class="(?i)firefox"] $ws2
-#assign [class="Thunar"] $ws3
+assign [class="Thunar"] $ws3
 assign [class="thunderbird"] $ws4
 assign [class="TelegramDesktop"] $ws5
 
@@ -366,6 +363,7 @@ for_window [class=TelegramDesktop] focus
 #exec_always --no-startup-id picom -b
 #
 # for custom config:
+exec_always --no-startup-id picom --config ~/.config/picom.conf -b
 
 #############################################
 # autostart applications/services on login: #
@@ -400,7 +398,7 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
-exec --no-startup-id sleep 1 && feh --bg-fill --randomize /mnt/purple/Pictures/chat-gpt/*
+exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -434,6 +432,7 @@ exec --no-startup-id /usr/bin/dunst
 
 # Autostart apps as you like
 #exec --no-startup-id sleep 2 && xfce4-terminal
+#exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 
 ###############
@@ -443,13 +442,13 @@ exec --no-startup-id /usr/bin/dunst
 # you need to have tray apps started manually one by one:
 
 # start blueberry app for managing bluetooth devices from tray:
-exec --no-startup-id blueberry-tray
+#exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # clipman-applet
-exec --no-startup-id xfce4-clipman
+#exec --no-startup-id xfce4-clipman
 
 ##################
 # floating rules #
@@ -487,6 +486,8 @@ for_window [class="urxvt"] border pixel 1
 set $darkbluetrans	#08052be6
 set $darkblue		#08052b
 set $lightblue		#5294e2
+set $neongreen		#00d96f
+set $deepgreen		#062b17
 set $urgentred		#e53935
 set $white		#ffffff
 set $black		#000000
@@ -498,12 +499,8 @@ set $yellowbrown	#e1b700
 
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
-#client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$mediumgrey
-#client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
-client.focused          #00FF00 #005500 #FFFFFF #00FF00 #00FF00
-client.unfocused        #444444 #222222 #888888 #222222 #222222
-for_window [class="TradingView"] border pixel 2
-
+client.focused		    	$neongreen	$deepgreen	$white		$neongreen	$neongreen
+client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
 client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
 client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
@@ -597,8 +594,8 @@ bindsym $mod+t exec --no-startup-id rofi -show window \
 #exec --no-startup-id greenclip daemon>/dev/null
 #bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard \
 #		-config ~/.config/rofi/rofidmenu.rasi
-exec_always --no-startup-id picom --config  ~/.config/picom.conf
+# start dictation
+bindsym $mod+Shift+d exec --no-startup-id ~/nerd-dictation/nerd-dictation begin
 
-bindsym F12 exec --no-startup-id bash -c "tdrop -ma --width 100% --height 100% alacritty --title 'Dropdown-Term'"
-bindsym $mod+period exec --no-startup-id rofimoji --action type
-
+# stop dictation (and type it)
+bindsym $mod+Shift+f exec --no-startup-id ~/nerd-dictation/nerd-dictation end
