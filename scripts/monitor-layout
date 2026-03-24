@@ -10,6 +10,8 @@ case "$host_name" in
     ;;
 esac
 
+restart_guard="${XDG_RUNTIME_DIR:-/tmp}/i3-monitor-layout-restarted"
+
 if xrandr --query | grep -q '^HDMI-A-0 connected'; then
   xrandr \
     --output HDMI-A-0 --mode 3840x2160 --rate 30 --rotate left --pos 0x0 \
@@ -18,4 +20,32 @@ if xrandr --query | grep -q '^HDMI-A-0 connected'; then
 else
   xrandr \
     --output eDP --primary --mode 1600x2560 --rate 144 --rotate right
+fi
+
+if command -v i3-msg >/dev/null 2>&1; then
+  sleep 1
+
+  expected_geometry="$(
+    xrandr --query | awk '/^eDP connected primary/ { split($3, a, /[+x]/); print a[1] " " a[2]; exit }'
+  )"
+
+  i3_geometry="$(
+    i3-msg -t get_outputs | python -c '
+import json, sys
+for output in json.load(sys.stdin):
+    if output.get("name") == "eDP" and output.get("active"):
+        rect = output.get("rect", {})
+        print(f"{rect.get(\"width\", 0)} {rect.get(\"height\", 0)}")
+        break
+' 2>/dev/null || true
+  )"
+
+  if [[ -n "$expected_geometry" && "$expected_geometry" != "$i3_geometry" ]]; then
+    if [[ ! -e "$restart_guard" ]]; then
+      touch "$restart_guard"
+      i3-msg restart >/dev/null 2>&1 || true
+    fi
+  else
+    rm -f "$restart_guard"
+  fi
 fi
