@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+host_name="$(hostname -s)"
+case "$host_name" in
+  haxor|haxor-*)
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+
 if xrandr --query | grep -q '^HDMI-A-0 connected'; then
   xrandr \
     --output HDMI-A-0 --mode 3840x2160 --rate 30 --rotate left --pos 0x0 \
