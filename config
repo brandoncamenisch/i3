@@ -1,29 +1,5 @@
 # exec --no-startup-id ~/set_once.sh
 exec --no-startup-id autorandr --change --default mobile
-# This file is a modified version based on default i3-config-wizard config
-# source is available here:
-# https://raw.githubusercontent.com/endeavouros-team/endeavouros-i3wm-setup/main/etc/skel/.config/i3/config
-# Maintainer: joekamprad [joekamprad //a_t// endeavouros.com]
-# https://endeavouros.com
-#
-# iconic font icon search: https://fontawesome.com/v4.7/cheatsheet/
-#
-# --> to update this run the following command (will backup existing setup file)
-# wget --backups=1 https://raw.githubusercontent.com/endeavouros-team/endeavouros-i3wm-setup/main/etc/skel/.config/i3/config -P ~/.config/i3/
-#
-# Endeavouros-i3 config file
-# Source for complete framework of our i3 config and theming here: https://github.com/endeavouros-team/endeavouros-i3wm-setup
-# EndeavourOS wiki holds some Information also: https://discovery.endeavouros.com/window-tiling-managers/i3-wm/
-# Please see http://i3wm.org/docs/userguide.html for the official i3 reference!
-
-#######################
-# config starts here: #
-#######################
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango: Noto Sans Regular 10
 
 # set the mod key to the winkey:
@@ -35,14 +11,6 @@ set $mod Mod4
 
 # default i3 tiling mode:
 workspace_layout default
-
-# i3 stacking layout:
-# Each window will be fullscreen and tabbed top to bottom.
-#workspace_layout stacking
-
-# i3 tabbed layout:
-# Each new window will open fullscreen as a tab (left to right)
-#workspace_layout tabbed
 
 ##############################
 # extra options for windows: #
@@ -398,8 +366,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.config/i3/scripts/monitor-layout
 
 # set wallpaper
-# exec --no-startup-id sleep 2 && nitrogen --restore
-exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
+exec --no-startup-id sleep 1 && feh --bg-fill ~/Downloads/wallpaper.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -484,108 +451,72 @@ for_window [class="urxvt"] border pixel 1
 ######################################
 
 # Define colors variables:
-set $darkbluetrans	#08052be6
-set $darkblue		#08052b
-set $lightblue		#5294e2
-set $neongreen		#00d96f
-set $deepgreen		#062b17
-set $urgentred		#e53935
-set $white		#ffffff
-set $black		#000000
-set $purple		#e345ff
-set $darkgrey		#383c4a
-set $grey		#b0b5bd
-set $mediumgrey		#8b8b8b
-set $yellowbrown	#e1b700
-
+set $darkbluetrans #09070ce6
+set $darkblue      #09070c
+set $lightblue     #b388ff
+set $neongreen     #00ff99
+set $deepgreen     #071a12
+set $urgentred     #ff3366
+set $white         #ffffff
+set $black         #000000
+set $purple        #9d4edd
+set $darkgrey      #1a1625
+set $grey          #b8a9d9
+set $mediumgrey    #7b6d97
+set $yellowbrown   #cfae42
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
-client.focused		    	$neongreen	$deepgreen	$white		$neongreen	$neongreen
-client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
-client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
-client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
+# class                 border    background text      indicator child_border
 
+client.focused          $purple   $purple    $white    $purple   $purple
+client.focused_inactive $darkgrey $darkgrey  $grey     $darkgrey $darkgrey
+client.unfocused        $darkblue $darkblue  $mediumgrey $darkblue $darkblue
+client.urgent           $urgentred $urgentred $white   $urgentred $urgentred
+client.placeholder      $black    $black     $grey     $black    $black
+
+client.background       $black
 ############################################
 # bar settings (input comes from i3blocks) #
 ############################################
 
 # Start i3bar to display a workspace bar
 # (plus the system information i3status finds out, if available)
+##############
 bar {
-		font pango: Noto Sans Regular 10
-		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position bottom
-#	    	i3bar_command i3bar --transparency
-# it could be that you have no primary display set: set one (xrandr --output <output> --primary)
-# reference: https://i3wm.org/docs/userguide.html#_tray_output
-		    #tray_output primary
-		    tray_padding 0
+    position top
+    font pango:ProggyClean Nerd Font 16
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    tray_output primary
+    workspace_buttons yes
+    strip_workspace_numbers no
 
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-strip_workspace_numbers yes
-##strip_workspace_name no
+    colors {
+        background $darkbluetrans
+        statusline $grey
+        separator  $mediumgrey
 
-		    colors {
-		    separator          $purple
-		    background         $darkgrey
-		    statusline         $white
-#                          		border 		        bg		txt		indicator
-		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-	}
+        focused_workspace  $purple $purple $white
+        active_workspace   $darkgrey $darkgrey $grey
+        inactive_workspace $darkblue $darkblue $mediumgrey
+        urgent_workspace   $urgentred $urgentred $white
+        binding_mode       $lightblue $lightblue $black
+    }
 }
-
-# you can add different bars for multidisplay setups on each display:
-# set output HDMI-0 to the display you want the bar, --transparency can be set.
-# Transparency needs rgba color codes to be used where the last two letters are the transparency factor see here:
-# https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
-# #08052be6 --> e6=90%
-
-# bar {
-#	font pango: Noto Sans Regular 10
-#	status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
-#	i3bar_command i3bar --transparency
-#	output HDMI-0
-#	position bottom
-#
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-#strip_workspace_numbers yes
-##strip_workspace_name no
-#
-#	colors {
-#		separator          $purple
-#		background         $darkbluetrans
-#        	statusline         $white
-#					border		bg		txt		indicator
-#		focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
-#		active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
-#		inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
-#		urgent_workspace	$urgentred	$urgentred	$white		$purple
-#	}
-#}
-
-#####################################
+#######################
 # Application menu handled by rofi: #
 #####################################
 
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
+
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
+        -theme ~/.config/rofi/haxor.rasi
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun \
-#		-config ~/.config/rofi/rofidmenu.rasi
-
-## rofi bindings for window menu ($mod+t /F10 optional disabled)
+#       -theme ~/.config/rofi/haxor.rasi
 
 bindsym $mod+t exec --no-startup-id rofi -show window \
-		-config ~/.config/rofi/rofidmenu.rasi
+        -theme ~/.config/rofi/haxor.rasi
 
 #bindsym F10 exec --no-startup-id rofi -show window \
 #		-config ~/.config/rofi/rofidmenu.rasi
@@ -600,5 +531,5 @@ bindsym $mod+t exec --no-startup-id rofi -show window \
 
 # stop dictation (and type it)
 #bindsym $mod+Shift+f exec --no-startup-id ~/Public/nerd-dictation/nerd-dictation end
-bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/toggle-action.sh
+#bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/toggle-action.sh
 
