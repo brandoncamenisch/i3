@@ -244,7 +244,8 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+g layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+e layout toggle split
+bindsym $mod+e exec rofimoji --selector-args="-theme ~/.config/rofi/haxor.rasi"
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -600,3 +601,4 @@ bindsym $mod+t exec --no-startup-id rofi -show window \
 # stop dictation (and type it)
 #bindsym $mod+Shift+f exec --no-startup-id ~/Public/nerd-dictation/nerd-dictation end
 bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/toggle-action.sh
+
